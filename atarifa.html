@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Agregar Tarifa</title>
+    <style>
+        button {
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Catalogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header>
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="vtarifas.html"><button>Ver Tarifas</button></a>
+        <p>Tarifas |</p>
+    </div>
+    <div class="ver">Agregar Tarifa</div>  
+    <div class="agregar">
+        <div class="input-grid">
+            <div>
+                <p>Vehiculo</p>
+                <input type="text" value="">
+            </div>
+            <div>
+                <p>Distancia</p>
+                <input type="text">
+            </div>
+            <div>
+                <p>Peso</p>
+                <input type="text">
+            </div>
+            <div>
+                <p>Tipo de mercancia</p>
+                <input type="text">
+            </div>
+            <div>
+                <p>Requisitos especiales</p>
+                <input type="text">
+            </div>
+            <div>
+                <p>Tarifa total</p>
+                <input type="text">
+            </div>
+        </div>
+    </div>
+    <button class="guardar">Guardar</button>  
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+
+    <script src="script/js/main.js"></script>
+    <script>
+        const guardarButton = document.querySelector('.guardar');
+        const inputs = document.querySelectorAll('.agregar input');
+    
+        guardarButton.addEventListener('click', () => {
+            const data = {};
+    
+            inputs.forEach(input => {
+                const label = input.previousElementSibling.textContent.trim();
+                data[label] = input.value;
+            });
+    
+            if (Object.values(data).some(value => value === "")) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+    
+            let tarifas = JSON.parse(localStorage.getItem('tarifas')) || [];
+            tarifas.push(data);
+            localStorage.setItem('tarifas', JSON.stringify(tarifas));
+    
+            window.location.href = 'vtarifas.html';
+        });
+    </script>
+</body>
+</html>

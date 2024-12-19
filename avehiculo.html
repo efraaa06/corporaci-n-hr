@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Agregar Vehículo</title>
+</head>
+<style>
+    button{
+        margin-left: 125px;
+    }
+</style>
+<body>
+    <header>
+        <h1>Catálogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header>
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="vvehiculo.html"><button>Ver Vehículos</button></a>
+        <p> Vehículos |</p>
+    </div>
+    <div class="ver">Agregar Vehículo</div>  
+    <div class="agregar">
+        <div class="input-grid">
+            <div>
+                <p>Placa</p>
+                <input type="text" id="placa">
+            </div>
+            <div>
+                <p>Conductor</p>
+                <input type="text" id="conductor">
+            </div>
+            <div>
+                <p>Capacidad maxima</p>
+                <input type="text" id="capacidad">
+            </div>
+            <div>
+                <p>Marca</p>
+                <input type="text" id="marca">
+            </div>
+            <div>
+                <p>Tipo</p>
+                <input type="text" id="tipo">
+            </div>
+            <div>
+                <p>Seguro</p>
+                <input type="text" id="seguro">
+            </div>
+            <div>
+                <p>Número de chasis</p>
+                <input type="text" id="chasis">
+            </div>
+            <div>
+                <p>Año de fabricación</p>
+                <input type="date" id="ano-fabricacion">
+            </div>
+            <div>
+                <p>Propietario</p>
+                <input type="text" id="propietario">
+            </div>
+            <div>
+                <p>Proxima revisión</p>
+                <input type="date" id="proxima-revision">
+            </div>
+        </div>
+    </div>
+    <button class="guardar" id="guardar">Guardar</button>  
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+    <script src="script/js/main.js"></script>
+    <script>
+        // Función para guardar los datos del vehículo
+        document.getElementById('guardar').addEventListener('click', () => {
+            // Obtén los valores de los inputs
+            const placa = document.getElementById('placa').value.trim();
+            const conductor = document.getElementById('conductor').value.trim();
+            const capacidad = document.getElementById('capacidad').value.trim();
+            const marca = document.getElementById('marca').value.trim();
+            const tipo = document.getElementById('tipo').value.trim();
+            const seguro = document.getElementById('seguro').value.trim();
+            const chasis = document.getElementById('chasis').value.trim();
+            const anoFabricacion = document.getElementById('ano-fabricacion').value;
+            const propietario = document.getElementById('propietario').value.trim();
+            const proximaRevision = document.getElementById('proxima-revision').value;
+
+            // Verificar que todos los campos estén completos
+            if (!placa || !conductor || !capacidad || !marca || !tipo || !seguro || !chasis || !anoFabricacion || !propietario || !proximaRevision) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            // Crear el objeto de vehículo
+            const vehiculo = {
+                placa,
+                conductor,
+                capacidad,
+                marca,
+                tipo,
+                seguro,
+                chasis,
+                anoFabricacion,
+                propietario,
+                proximaRevision
+            };
+
+            // Obtener vehículos existentes o inicializar un arreglo vacío
+            let vehiculos = JSON.parse(localStorage.getItem('vehiculos')) || [];
+
+            // Agregar el nuevo vehículo al arreglo
+            vehiculos.push(vehiculo);
+
+            // Guardar los vehículos en el localStorage
+            localStorage.setItem('vehiculos', JSON.stringify(vehiculos));
+
+            // Redirigir a la página de ver vehículos
+            window.location.href = 'vvehiculo.html';
+        });
+    </script>
+</body>
+</html>

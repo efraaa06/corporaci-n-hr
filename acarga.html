@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Agregar entrada de carga</title>
+</head>
+<body>
+    <header>
+        <h1>Catalogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header>
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="vcarga.html"><button>Ver entradas de carga</button></a>
+        <p> Entradas de carga |</p>
+    </div>
+    <div class="ver">Agregar Entrada de carga</div>  
+        <div class="agregar">
+            <div class="input-grid">
+                <div>
+                    <p>Nombre del cliente</p>
+                    <input type="text" value="">
+                </div>
+                <div>
+                    <p>Tipo de carga</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Fecha</p>
+                    <input type="date">
+                </div>
+                <div>
+                    <p>Fecha de recogida</p>
+                    <input type="date">
+                </div>
+                <div>
+                    <p>Fecha de entrega</p>
+                    <input type="date">
+                </div>
+                <div>
+                    <p>Envío</p>
+                    <input type="date">
+                </div>
+                <div>
+                    <p>Tasa de transporte de línea</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Descargar</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Reembolsar</p>
+                    <input type="text">
+                </div>
+            </div>
+        </div>
+        <button class="guardar">Guardar</button>  
+    </div>
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+    <script src="script/js/main.js"></script>
+    <script>
+        // Obtén los elementos del formulario
+        const guardarButton = document.querySelector('.guardar');
+        const inputs = document.querySelectorAll('.agregar input');
+    
+        // Función para guardar los datos en el localStorage
+        guardarButton.addEventListener('click', () => {
+            const data = {};
+    
+            // Recopila los datos de los inputs
+            inputs.forEach(input => {
+                const label = input.previousElementSibling.textContent.trim();
+                data[label] = input.value;
+            });
+    
+            // Verifica que todos los campos estén llenos
+            if (Object.values(data).some(value => value === "")) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+    
+            // Guardar en el localStorage
+            let entradas = JSON.parse(localStorage.getItem('entradasDeCarga')) || [];
+            entradas.push(data);
+            localStorage.setItem('entradasDeCarga', JSON.stringify(entradas));
+    
+            // Redirige a la página de ver entradas de carga
+            window.location.href = 'vcarga.html';
+        });
+    </script>
+         
+</body>
+</html> 

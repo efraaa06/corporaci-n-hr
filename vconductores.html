@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Ver conductores</title>
+</head>
+<style>
+    button{
+        margin-left: 160px;
+    }
+</style>
+<body>
+    <header>
+        <h1>Catálogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header> 
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="aconductor.html"><button>Agregar Conductor</button></a>
+        <p>Conductores |</p>
+    </div>
+    <div class="ver">Ver Conductores</div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo Electrónico</th>
+                    <th>Dirección</th>
+                    <th>Código Postal</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Ciudad</th>
+                    <th>Distrito</th>
+                    <th>Teléfono</th>
+                    <th>DUI</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+<script src="script/js/main.js"></script>
+<script>
+    window.onload = () => {
+        const tablaBody = document.querySelector('tbody');
+        const conductores = JSON.parse(localStorage.getItem('conductores')) || [];
+
+        conductores.forEach(conductor => {
+            const row = document.createElement('tr');
+
+            // Agregar datos a la fila
+            Object.values(conductor).forEach(value => {
+                const cell = document.createElement('td');
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            // Botón de eliminar
+            const deleteCell = document.createElement('td');
+            const deleteButton = document.createElement('img');
+            deleteButton.src = "img/borrar.png";
+            deleteButton.classList.add('borrar');
+            deleteButton.addEventListener('click', () => {
+                eliminarConductor(conductor, row);
+            });
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
+
+            tablaBody.appendChild(row);
+        });
+    };
+
+    function eliminarConductor(conductor, row) {
+        let conductores = JSON.parse(localStorage.getItem('conductores')) || [];
+        conductores = conductores.filter(item => JSON.stringify(item) !== JSON.stringify(conductor));
+        localStorage.setItem('conductores', JSON.stringify(conductores));
+        row.remove();
+    }
+</script>
+</body>
+</html>

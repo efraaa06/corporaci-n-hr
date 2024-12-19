@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Ver entrada de carga</title>
+</head>
+<body>
+    <header>
+      <h1>Catalogo</h1>  
+      <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header> 
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+    <a href="acarga.html"><button>Agregar entradas de carga</button></a>
+    <p> Entradas de carga |</p>
+    </div>
+    <div class="ver">Ver Entrada de carga</div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre del cliente</th>
+                    <th>Tipo de carga</th>
+                    <th>Fecha</th>
+                    <th>Fecha de recogida</th>
+                    <th>Fecha de entrega</th>
+                    <th>Envío</th>
+                    <th>Tasa de transporte de línea</th>
+                    <th>Descarga</th>
+                    <th>Reembolsar</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        
+
+    </div>
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+<script src="script/js/main.js"></script>
+<script>
+    // Función para cargar y mostrar las entradas de carga
+    window.onload = () => {
+        const tablaBody = document.querySelector('tbody');
+        const entradas = JSON.parse(localStorage.getItem('entradasDeCarga')) || [];
+
+        // Si no hay entradas, no mostrar el botón de eliminar
+        const borrarButtons = document.querySelectorAll('.borrar');
+        if (entradas.length === 0) {
+            borrarButtons.forEach(button => button.style.display = 'none');
+        }
+
+        // Agrega las filas de las entradas
+        entradas.forEach(entrada => {
+            const row = document.createElement('tr');
+            // Agregar cada valor de la entrada a una celda de la tabla
+            Object.values(entrada).forEach(value => {
+                const cell = document.createElement('td');
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            // Crea la celda con el botón de eliminar
+            const deleteCell = document.createElement('td');
+            const deleteButton = document.createElement('img');
+            deleteButton.src = "img/borrar.png";
+            deleteButton.classList.add('borrar');
+            deleteButton.addEventListener('click', () => {
+                eliminarEntrada(entrada, row);
+            });
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
+
+            tablaBody.appendChild(row);
+        });
+    };
+
+    // Función para eliminar una entrada
+    function eliminarEntrada(entrada, row) {
+        let entradas = JSON.parse(localStorage.getItem('entradasDeCarga')) || [];
+        // Filtrar la entrada para eliminarla
+        entradas = entradas.filter(item => JSON.stringify(item) !== JSON.stringify(entrada));
+        localStorage.setItem('entradasDeCarga', JSON.stringify(entradas));
+
+        // Eliminar la fila de la tabla
+        row.remove();
+        
+        // Verificar si no quedan entradas
+        const borrarButtons = document.querySelectorAll('.borrar');
+        if (entradas.length === 0) {
+            borrarButtons.forEach(button => button.style.display = 'none');
+        }
+    }
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Ver reporte</title>
+    <style>
+        button {
+            margin-top: 20px;
+        }
+
+        .formulario-container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 150px;
+            position: fixed;
+        }
+
+        .formulario {
+            margin-bottom: 20px;
+            width: 300px;
+            margin-left: 380px;
+        }
+
+        select {
+            border: solid #A4A4A4;
+            border-width: 1px;
+            padding-right: 200px;
+        }
+
+        #fecha {
+            border: solid #A4A4A4;
+            border-width: 1px;
+        }
+
+        label {
+            display: block;
+        }
+
+        .formulario button {
+            color: white;
+            cursor: pointer;
+            margin-top: 80px;
+            margin-left: -120px;
+            width: 80px;
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Catálogo</h1>  
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header> 
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <p>Reporte</p>
+    </div>
+    <div class="ver">Resumen del pago del conductor</div>
+
+    <!-- Formularios -->
+    <div class="formulario-container">
+        <!-- Formulario de conductores -->
+        <form class="formulario" id="form-conductor">
+            <label for="conductor">Nombre</label>
+            <select id="conductor" required>
+                <!-- Opciones dinámicas generadas desde el script -->
+            </select>
+        </form>
+
+        <!-- Formulario de fecha -->
+        <form class="formulario" id="form-fecha">
+            <label for="fecha">A partir de la fecha</label>
+            <input type="date" id="fecha" required>
+            <button type="button" id="btn-reporte">Reporte</button>
+        </form>
+    </div>
+
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+
+    <script>
+        // Simulando conductores cargados en el sistema
+        const conductores = JSON.parse(localStorage.getItem('conductores')) || [
+            { id: 1, nombre: "Juan Pérez" },
+            { id: 2, nombre: "Ana López" },
+            { id: 3, nombre: "Carlos García" }
+        ];
+
+        // Llenar el select con los conductores
+        const conductorSelect = document.getElementById('conductor');
+        conductores.forEach(conductor => {
+            const option = document.createElement('option');
+            option.value = conductor.id;
+            option.textContent = conductor.nombre;
+            conductorSelect.appendChild(option);
+        });
+
+        // Evento del botón Generar Reporte
+        document.getElementById('btn-reporte').addEventListener('click', () => {
+            const conductorId = conductorSelect.value;
+            const fecha = document.getElementById('fecha').value;
+
+            if (!conductorId || !fecha) {
+                alert("Por favor, complete ambos formularios.");
+                return;
+            }
+
+            // Redirigir a la ficha del conductor
+            const url = `dconductor.html?id=${conductorId}`;
+            window.location.href = url;
+        });
+    </script>
+</body>
+</html>

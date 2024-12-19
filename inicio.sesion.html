@@ -1,0 +1,111 @@
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/global.css">
+    <title>Inicio de sesión</title>
+    <style>
+        img {
+            height: 130px;
+            padding-left: 45%;
+            padding-top: 1%;
+        }
+
+        h1 {
+            padding-left: 34%;
+            font-weight: 500;
+            font-stretch: 500;
+            color: black;
+        }
+
+        p {
+            margin-bottom: 10px;
+            margin-left: 300px;
+            font-size: x-large;
+        }
+
+        input {
+            margin-left: 300px;
+            width: 500px;
+            height: 25px;
+            border: solid #707070;
+        }
+
+        div {
+            padding-top: 5px;
+        }
+      
+        button {
+            color: #707070;
+            margin-top: 60px;
+            width: 100px;
+            height: 45px;
+            margin-right: 50px;   
+            font-size: large;
+            background-color: #b1b1b1;
+            border: none;
+            cursor: pointer;
+        }
+
+        #ok {
+            margin-left: 40%;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: larger;
+        }    
+
+        .error {
+            color: red;
+            font-size: small;
+            margin-left: 300px;
+        }
+    </style>
+</head>
+<body>
+    <img src="img/logo.png" alt="">
+    <h1>CORPORACIÓN HR S.A de S.V</h1>
+    <form id="loginForm">
+        <div>
+            <p>Correo electrónico</p>
+            <input type="email" id="email" required>
+            <div id="emailError" class="error"></div>
+            <p>Contraseña</p>
+            <input type="password" id="password" required>
+            <div id="passwordError" class="error"></div>
+        </div>
+        <a href="panel.html"><button type="submit" id="ok">OK</button></a>
+        <a href="https://www.google.com/"><button type="button">Cancelar</button></a>
+    </form>
+    <footer>
+        <a href="registrarse.html"><u>Registrarse</u></a>
+        <br>
+        <a href="contraseña.html"><u>¿Olvidaste la contraseña?</u></a>
+    </footer>
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita que la página se recargue
+    
+            // Capturar los valores de los campos
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+    
+            // Obtener usuarios del LocalStorage
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const user = users.find(user => user.email === email && user.password === password);
+    
+            if (user) {
+                alert(`Bienvenido, ${user.fullName}`);
+                window.location.href = "panel.html"; // Redirige al panel
+            } else {
+                document.getElementById("passwordError").textContent = "Correo o contraseña incorrectos";
+            }
+        });
+    </script>
+        
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Detalles de Pago</title>
+    <style>
+button {
+        margin-left: 115px;
+    }
+
+       table{
+        position: fixed;
+        margin-left: 280px;
+        margin-top: 150px;
+       }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Catalogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header>
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">
+        <a href="asalario.html"><button>Agregar Salario</button></a>
+        <p> Reporte |</p>
+    </div>
+    <div class="ver">Detalles de Pago</div>
+    <div class="detalles">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre Completo</th>
+                    <th>DUI</th>
+                    <th>Periodo de Pago</th>
+                    <th>Sueldo Base</th>
+                    <th>Tasa por Hora</th>
+                    <th>Tipo de Pago</th>
+                    <th>Banco</th>
+                    <th>Horas Trabajadas</th>
+                    <th>Aumento de Salario</th>
+                    <th>Bonificación</th>
+                    <th>Total a Pagar</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-detalles">
+                <!-- Los datos se llenan desde el script -->
+            </tbody>
+        </table>
+    </div>
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+    <script src="script/js/main.js"></script>
+    <script>
+        const tablaDetalles = document.getElementById('tabla-detalles');
+
+        // Cargar datos desde el localStorage
+        const salarios = JSON.parse(localStorage.getItem('salarios')) || [];
+
+        if (salarios.length === 0) {
+            const filaVacia = document.createElement('tr');
+            filaVacia.innerHTML = `<td colspan="11">No hay datos disponibles</td>`;
+            tablaDetalles.appendChild(filaVacia);
+        } else {
+            salarios.forEach((salario) => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${salario.nombreCompleto}</td>
+                    <td>${salario.dui}</td>
+                    <td>${salario.periodo}</td>
+                    <td>${salario.sueldoBase}</td>
+                    <td>${salario.tasaHora}</td>
+                    <td>${salario.tipoPago}</td>
+                    <td>${salario.banco}</td>
+                    <td>${salario.horasTrabajadas}</td>
+                    <td>${salario.aumentoSalario}</td>
+                    <td>${salario.bonificacion}</td>
+                    <td>${salario.totalPagar}</td>
+                `;
+                tablaDetalles.appendChild(fila);
+            });
+        }
+    </script>
+</body>
+</html>

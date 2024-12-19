@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Agregar Conductor</title>
+</head>
+<style>
+    button{
+        margin-left: 160px;
+    }
+</style>
+<body>
+    <header>
+        <h1>Catálogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header>
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="vconductores.html"><button>Ver Conductores</button></a>
+        <p> Conductores |</p>
+    </div>
+    <div class="ver">Agregar Conductor</div>  
+    <div class="agregar">
+        <div class="input-grid">
+            <div>
+                <p>Nombre completo</p>
+                <input type="text" id="nombre" name="nombre">
+            </div>
+            <div>
+                <p>Correo Electrónico</p>
+                <input type="email" id="correo" name="correo">
+            </div>
+            <div>
+                <p>Dirección</p>
+                <input type="text" id="direccion" name="direccion">
+            </div>
+            <div>
+                <p>Código Postal</p>
+                <input type="text" id="codigo-postal" name="codigo-postal">
+            </div>
+            <div>
+                <p>Fecha de nacimiento</p>
+                <input type="date" id="fecha-nacimiento" name="fecha-nacimiento">
+            </div>
+            <div>
+                <p>Ciudad</p>
+                <input type="text" id="ciudad" name="ciudad">
+            </div>
+            <div>
+                <p>Distrito</p>
+                <input type="text" id="distrito" name="distrito">
+            </div>
+            <div>
+                <p>Teléfono</p>
+                <input type="tel" id="telefono" name="telefono">
+            </div>
+            <div>
+                <p>DUI</p>
+                <input type="text" id="dui" name="dui">
+            </div>
+        </div>
+    </div>
+    <button class="guardar" id="guardar">Guardar</button> 
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+    <script src="script/js/main.js"></script>
+    <script>
+        // Función para guardar el conductor
+        document.getElementById('guardar').addEventListener('click', () => {
+            // Obtén los valores de los inputs
+            const nombre = document.getElementById('nombre').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const direccion = document.getElementById('direccion').value.trim();
+            const codigoPostal = document.getElementById('codigo-postal').value.trim();
+            const fechaNacimiento = document.getElementById('fecha-nacimiento').value;
+            const ciudad = document.getElementById('ciudad').value.trim();
+            const distrito = document.getElementById('distrito').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const dui = document.getElementById('dui').value.trim();
+
+            // Verificar si todos los campos están llenos
+            if (!nombre || !correo || !direccion || !codigoPostal || !fechaNacimiento || !ciudad || !distrito || !telefono || !dui) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            // Crear el objeto de datos del conductor
+            const conductor = {
+                nombre,
+                correo,
+                direccion,
+                codigoPostal,
+                fechaNacimiento,
+                ciudad,
+                distrito,
+                telefono,
+                dui
+            };
+
+            // Obtener los conductores existentes del localStorage o inicializar un array vacío
+            let conductores = JSON.parse(localStorage.getItem('conductores')) || [];
+
+            // Agregar el nuevo conductor
+            conductores.push(conductor);
+
+            // Guardar los conductores en el localStorage
+            localStorage.setItem('conductores', JSON.stringify(conductores));
+
+            // Redirigir a la página de ver conductores
+            window.location.href = 'vconductores.html';
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Ver Tarifas</title>
+    <style>
+        button {
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Catalogo</h1>  
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header> 
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="atarifa.html"><button>Agregar Tarifa</button></a>
+        <p> Tarifas |</p>
+    </div>
+    <div class="ver">Ver Tarifas</div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Vehiculo</th>
+                    <th>Distancia</th>
+                    <th>Peso</th>
+                    <th>Tipo de mercancia</th>
+                    <th>Requisitos especiales</th>
+                    <th>Tarifa total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+
+    <script src="script/js/main.js"></script>
+    <script>
+        window.onload = () => {
+            const tablaBody = document.querySelector('tbody');
+            const tarifas = JSON.parse(localStorage.getItem('tarifas')) || [];
+
+            if (tarifas.length === 0) {
+                document.querySelectorAll('.borrar').forEach(button => button.style.display = 'none');
+            }
+
+            tarifas.forEach(tarifa => {
+                const row = document.createElement('tr');
+                Object.values(tarifa).forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+
+                const deleteCell = document.createElement('td');
+                const deleteButton = document.createElement('img');
+                deleteButton.src = "img/borrar.png";
+                deleteButton.classList.add('borrar');
+                deleteButton.addEventListener('click', () => {
+                    eliminarTarifa(tarifa, row);
+                });
+                deleteCell.appendChild(deleteButton);
+                row.appendChild(deleteCell);
+
+                tablaBody.appendChild(row);
+            });
+        };
+
+        function eliminarTarifa(tarifa, row) {
+            let tarifas = JSON.parse(localStorage.getItem('tarifas')) || [];
+            tarifas = tarifas.filter(item => JSON.stringify(item) !== JSON.stringify(tarifa));
+            localStorage.setItem('tarifas', JSON.stringify(tarifas));
+
+            row.remove();
+        }
+    </script>
+</body>
+</html>

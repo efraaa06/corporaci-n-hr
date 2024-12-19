@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/global.css">
+    <title>Registrarse</title>
+    <style>
+        /* Tu CSS existente */
+        p {
+            margin-top: 10px;
+            margin-left: 100px;
+            font-size: x-large;
+        }
+
+        input {
+            margin-left: 100px;
+            margin-bottom: 50px;
+            margin-top: 1px;
+            width: 500px;
+            height: 25px;
+            border: solid #707070;
+        }
+
+        .form-container {
+            padding-top: 90px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            width: 45%;
+            margin-bottom: 50px;
+        }
+
+        button {
+            color: #707070;
+            margin-top: 60px;
+            width: 100px;
+            height: 45px;
+            margin-right: 50px;   
+            margin-top: 30px;     
+            font-size: large;
+            background-color: #b1b1b1;
+            border: #707070;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 5px;
+            font-size: larger;
+        }
+
+        .error {
+            color: red;
+            font-size: small;
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <form id="registrationForm">
+        <div class="form-container">
+            <div class="form-group">
+                <p>Correo electrónico *</p>
+                <input type="email" id="email" required>
+                <div id="emailError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <p>Nombre completo *</p>
+                <input type="text" id="fullName" required>
+                <div id="nameError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <p>Contraseña *</p>
+                <input type="password" id="password" required>
+                <div id="passwordError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <p>Confirmar contraseña *</p>
+                <input type="password" id="confirmPassword" required>
+                <div id="confirmPasswordError" class="error"></div>
+            </div>
+        </div>
+        <footer>
+            <button type="submit" id="ok">Confirmar</button>
+            <a href="inicio.sesion.html"><button type="button">Cancelar</button></a>
+        </footer>
+    </form>
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita que la página se recargue
+    
+            // Capturar los valores de los campos
+            const email = document.getElementById("email").value;
+            const fullName = document.getElementById("fullName").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+    
+            // Validar contraseñas coincidan
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").textContent = "Las contraseñas no coinciden";
+                return;
+            } else {
+                document.getElementById("confirmPasswordError").textContent = "";
+            }
+    
+            // Guardar datos en LocalStorage
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const userExists = users.some(user => user.email === email);
+    
+            if (userExists) {
+                document.getElementById("emailError").textContent = "El correo electrónico ya está registrado";
+            } else {
+                users.push({ email, fullName, password });
+                localStorage.setItem("users", JSON.stringify(users));
+    
+                // Mostrar éxito y redirigir
+                alert("Usuario registrado con éxito");
+                window.location.href = "inicio.sesion.html";
+            }
+        });
+    </script>
+    
+</body>
+</html>

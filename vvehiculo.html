@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Ver Vehículos</title>
+</head>
+<style>
+    button{
+        margin-left: 125px;
+    }
+</style>
+<body>
+    <header>
+        <h1>Catálogo</h1>  
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header> 
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="avehiculo.html"><button>Agregar Vehículo</button></a>
+        <p> Vehículos |</p>
+    </div>
+    <div class="ver">Ver Vehículos</div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Conductor</th>
+                    <th>Capacidad maxima</th>
+                    <th>Marca</th>
+                    <th>Tipo</th>
+                    <th>Seguro</th>
+                    <th>Número de chasis</th>
+                    <th>Año de fabricación</th>
+                    <th>Propietario</th>
+                    <th>Proxima revisión</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las filas de la tabla se llenarán con JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+
+    <script src="script/js/main.js"></script>
+    <script>
+        // Función para cargar y mostrar los vehículos
+        window.onload = () => {
+            const tablaBody = document.querySelector('tbody');
+            const vehiculos = JSON.parse(localStorage.getItem('vehiculos')) || [];
+
+            // Si no hay vehículos, no mostrar el botón de eliminar
+            if (vehiculos.length === 0) {
+                document.querySelector('.borrar').style.display = 'none';
+            }
+
+            // Agregar las filas de los vehículos
+            vehiculos.forEach(vehiculo => {
+                const row = document.createElement('tr');
+                Object.values(vehiculo).forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+
+                // Crear la celda con el botón de eliminar
+                const deleteCell = document.createElement('td');
+                const deleteButton = document.createElement('img');
+                deleteButton.src = "img/borrar.png";
+                deleteButton.classList.add('borrar');
+                deleteButton.addEventListener('click', () => {
+                    eliminarVehiculo(vehiculo, row);
+                });
+                deleteCell.appendChild(deleteButton);
+                row.appendChild(deleteCell);
+
+                tablaBody.appendChild(row);
+            });
+        };
+
+        // Función para eliminar un vehículo
+        function eliminarVehiculo(vehiculo, row) {
+            let vehiculos = JSON.parse(localStorage.getItem('vehiculos')) || [];
+            vehiculos = vehiculos.filter(item => JSON.stringify(item) !== JSON.stringify(vehiculo));
+            localStorage.setItem('vehiculos', JSON.stringify(vehiculos));
+
+            // Eliminar la fila de la tabla
+            row.remove();
+        }
+    </script>
+</body>
+</html>

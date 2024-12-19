@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Agregar Salario</title>
+</head>
+<style>
+    button {
+        margin-left: 115px;
+    }
+</style>
+<body>
+    <header>
+        <h1>Catalogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header>
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="dconductor.html"><button>Ver detalles de pago</button></a>
+        <p> Reporte |</p>
+    </div>
+    <div class="ver">Agregar Salario</div>  
+    <div class="agregar">
+        <div class="input-grid">
+            <div>
+                <p>Nombre Completo</p>
+                <input type="text" id="nombreCompleto" value="">
+            </div>
+            <div>
+                <p>DUI</p>
+                <input type="text" id="dui">
+            </div>
+            <div>
+                <p>Periodo de pago</p>
+                <input type="date" id="periodo">
+            </div>
+            <div>
+                <p>Sueldo base</p>
+                <input type="text" id="sueldoBase">
+            </div>
+            <div>
+                <p>Tasa por hora</p>
+                <input type="text" id="tasaHora">
+            </div>
+            <div>
+                <p>Tipo de pago</p>
+                <input type="text" id="tipoPago">
+            </div>
+            <div>
+                <p>Banco</p>
+                <input type="text" id="banco">
+            </div>
+            <div>
+                <p>Horas trabajadas mensuales</p>
+                <input type="text" id="horasTrabajadas">
+            </div>
+            <div>
+                <p>Aumento de salario</p>
+                <input type="text" id="aumentoSalario">
+            </div>
+            <div>
+                <p>Bonificación por tiempo de servicio</p>
+                <input type="text" id="bonificacion">
+            </div>
+            <div>
+                <p>Total a pagar</p>
+                <input type="text" id="totalPagar">
+            </div>
+        </div>
+    </div>
+    <button class="guardar">Guardar</button>  
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+    <script src="script/js/main.js"></script>
+    <script>
+        const guardarButton = document.querySelector('.guardar');
+        guardarButton.addEventListener('click', () => {
+            const nombreCompleto = document.getElementById('nombreCompleto').value;
+            const dui = document.getElementById('dui').value;
+            const periodo = document.getElementById('periodo').value;
+            const sueldoBase = document.getElementById('sueldoBase').value;
+            const tasaHora = document.getElementById('tasaHora').value;
+            const tipoPago = document.getElementById('tipoPago').value;
+            const banco = document.getElementById('banco').value;
+            const horasTrabajadas = document.getElementById('horasTrabajadas').value;
+            const aumentoSalario = document.getElementById('aumentoSalario').value;
+            const bonificacion = document.getElementById('bonificacion').value;
+            const totalPagar = document.getElementById('totalPagar').value;
+
+            if (!nombreCompleto || !dui || !periodo || !sueldoBase || !tasaHora || !tipoPago || !banco || !horasTrabajadas || !aumentoSalario || !bonificacion || !totalPagar) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            const data = {
+                nombreCompleto,
+                dui,
+                periodo,
+                sueldoBase,
+                tasaHora,
+                tipoPago,
+                banco,
+                horasTrabajadas,
+                aumentoSalario,
+                bonificacion,
+                totalPagar
+            };
+
+            let salarios = JSON.parse(localStorage.getItem('salarios')) || [];
+            salarios.push(data);
+            localStorage.setItem('salarios', JSON.stringify(salarios));
+            alert("Salario guardado con éxito");
+
+            window.location.href = 'dconductor.html';
+        });
+    </script>
+</body>
+</html>

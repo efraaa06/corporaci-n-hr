@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Ver Rutas</title>
+    <style>
+        .agregar .input-grid {
+            grid-template-columns: max-content;
+            margin-left: 380px;
+            margin-top: 20px;
+        }
+
+        select{
+            border:solid #888;
+            border-width: 1px;
+            padding-right: 100px;
+        }
+
+        button {
+            position: fixed;
+            margin-left: 380px;
+            margin-top: 260px;
+            width: 90px;
+        }
+
+        #map {
+            height: 300px;
+            width: 40%;
+            margin-left: 700px;
+            margin-top: 110px;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #555;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            border: 2px dashed #888;
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Catalogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header>
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">
+        <p> Ruta </p>
+    </div>
+    <div class="ver">Localización de vehículo</div>
+    <div class="agregar">
+        <div class="input-grid">
+            <div>
+                <p>Vehículo</p>
+                <select id="vehiculo">
+                    <!-- Opciones generadas dinámicamente -->
+                </select>
+            </div>
+            <div>
+                <p>Conductor</p>
+                <select id="conductor">
+                    <!-- Opciones generadas dinámicamente -->
+                </select>
+            </div>
+        </div>
+    </div>
+    <button id="buscar">Buscar</button>
+
+    <!-- Contenedor del mapa de prueba -->
+    <div id="map">Mapa de prueba (aquí se mostraría la ubicación)</div>
+
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+    <script>
+        window.onload = () => {
+            // Cargar datos desde el localStorage
+            const vehiculos = JSON.parse(localStorage.getItem('vehiculos')) || [];
+            const conductores = JSON.parse(localStorage.getItem('conductores')) || [];
+            const destinatarios = JSON.parse(localStorage.getItem('destinatarios')) || [];
+
+            const vehiculoSelect = document.getElementById('vehiculo');
+            const conductorSelect = document.getElementById('conductor');
+            const destinatarioSelect = document.getElementById('destinatario');
+
+            // Rellenar opciones de vehículos
+            vehiculos.forEach(vehiculo => {
+                const option = document.createElement('option');
+                option.value = vehiculo.placa;
+                option.textContent = vehiculo.placa;
+                vehiculoSelect.appendChild(option);
+            });
+
+            // Rellenar opciones de conductores
+            conductores.forEach(conductor => {
+                const option = document.createElement('option');
+                option.value = conductor.id;
+                option.textContent = conductor.nombre;
+                conductorSelect.appendChild(option);
+            });
+
+            
+
+            // Evento de búsqueda
+            document.getElementById('buscar').addEventListener('click', () => {
+                const vehiculoPlaca = vehiculoSelect.value;
+                const conductorId = conductorSelect.value;
+                const destinatarioId = destinatarioSelect.value;
+
+                if (vehiculoPlaca && conductorId && destinatarioId) {
+                    const destinatario = destinatarios.find(d => d.id === destinatarioId);
+
+                    if (destinatario) {
+                        alert('Simulación: La dirección del destinatario sería mostrada en un mapa.');
+                    } else {
+                        alert('Destinatario no encontrado.');
+                    }
+                } else {
+                    alert('Por favor, seleccione un vehículo, un conductor y un destinatario.');
+                }
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css">
+    <title>Ver Envíos</title>
+</head>
+<style>
+    button {
+        margin-left: 100px;
+    }
+</style>
+<body>
+    <header>
+        <h1>Catalogo</h1>
+        <img src="img/user.png" alt="Usuario" id="user-icon" class="user-icon">
+    </header>
+    <div class="panel-container" id="panel-container">
+        <img src="img/user.png" alt="Usuario">
+        <h2>Admin</h2>
+        <br><br>
+        <button id="button">Cerrar sesión</button>
+    </div>
+    <div class="panel">  
+        <a href="aenvio.html"><button>Agregar Envío</button></a>
+        <p> Envíos |</p>
+    </div>
+    <div class="ver">Ver Envíos</div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Correo Electrónico</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <ul class="lista">
+        <a href="panel.html"><li>Panel de control</li></a>
+        <a href="vcarga.html"><li>Entradas de carga</li></a>
+        <a href="vcliente.html"><li>Clientes</li></a>
+        <a href="vdestinatario.html"><li>Destinatarios</li></a>
+        <a href="vconductores.html"><li>Conductores</li></a>
+        <a href="vvehiculo.html"><li>Vehiculos</li></a>
+        <a href="venvio.html"><li>Envio</li></a>
+        <a href="vreporte.html"><li>Reporte</li></a>
+        <a href="vrutas.html"><li>Ruta</li></a>
+        <a href="vtarifas.html"><li>Tarifas</li></a>
+        <a href="vremitentes.html"><li>Remitentes</li></a>
+    </ul>
+    <script src="script/js/main.js"></script>
+    <script>
+        window.onload = () => {
+            const tablaBody = document.querySelector('tbody');
+            const envios = JSON.parse(localStorage.getItem('envios')) || [];
+
+            envios.forEach(envio => {
+                const row = document.createElement('tr');
+                Object.values(envio).forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+
+                const deleteCell = document.createElement('td');
+                const deleteButton = document.createElement('img');
+                deleteButton.src = "img/borrar.png";
+                deleteButton.classList.add('borrar');
+                deleteButton.addEventListener('click', () => {
+                    eliminarEnvio(envio, row);
+                });
+                deleteCell.appendChild(deleteButton);
+                row.appendChild(deleteCell);
+
+                tablaBody.appendChild(row);
+            });
+        };
+
+        function eliminarEnvio(envio, row) {
+            let envios = JSON.parse(localStorage.getItem('envios')) || [];
+            envios = envios.filter(item => JSON.stringify(item) !== JSON.stringify(envio));
+            localStorage.setItem('envios', JSON.stringify(envios));
+
+            row.remove();
+        }
+    </script>
+</body>
+</html>
